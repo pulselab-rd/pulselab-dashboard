@@ -2143,7 +2143,8 @@ O menor volume de execuções no período ocorreu em função de atividades oper
     }
     if (foiEditado && data.persons !== undefined) {
       const meta = card.querySelector('.card-meta');
-      if (meta) meta.innerHTML = data.persons.map(p => `<span class="person-tag">${p}</span>`).join('');
+      const unique = [...new Set(data.persons)];
+      if (meta) meta.innerHTML = unique.map(p => `<span class="person-tag">${p}</span>`).join('');
     }
     if (foiEditado && data.tipo) { card.dataset.type = data.tipo; }
 
@@ -2900,9 +2901,9 @@ O menor volume de execuções no período ocorreu em função de atividades oper
     const novoPrazoText = novoPrazoEl ? novoPrazoEl.textContent.replace('↳ Novo prazo:','').trim() : '';
     document.getElementById('editNovoPrazo').value = novoPrazoText;
 
-    // Responsáveis
-    const persons = Array.from(card.querySelectorAll('.person-tag')).map(t => t.textContent.trim());
-    document.querySelectorAll('.person-toggle').forEach(tog => {
+    // Responsáveis — deduplicar e usar só #editPersons
+    const persons = [...new Set(Array.from(card.querySelectorAll('.person-tag')).map(t => t.textContent.trim()))];
+    document.querySelectorAll('#editPersons .person-toggle').forEach(tog => {
       tog.classList.toggle('selected', persons.includes(tog.dataset.name));
     });
 
@@ -2955,7 +2956,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
     const desc     = document.getElementById('editDesc').value.trim();
     const stepsRaw = document.getElementById('editSteps').value.trim();
     const pct = document.getElementById('editPct').value.trim();
-    const persons = Array.from(document.querySelectorAll('#editPersons .person-toggle.selected')).map(t => t.dataset.name);
+    const persons = [...new Set(Array.from(document.querySelectorAll('#editPersons .person-toggle.selected')).map(t => t.dataset.name))];
 
     const info = statusMap[status];
 
