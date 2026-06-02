@@ -2094,7 +2094,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
               ${data.novoPrazo ? `<div class="novo-prazo">↳ Novo prazo: ${data.novoPrazo}</div>` : ''}
               ${data.desc ? `<div class="card-desc">${data.desc.replace(/\n/g, '<br>')}</div>` : ''}
               ${steps.length ? `<div class="steps">${steps.map(s => `<div class="step-item"><div class="step-dot"></div>${s}</div>`).join('')}</div>` : ''}
-              ${pctNum !== null ? `<div class="card-progress"><div class="card-progress-header"><span class="card-progress-label">Execução</span><span class="card-progress-pct">${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(1).replace('.',','))}%</span></div><div class="card-progress-track"><div class="card-progress-fill" style="width:${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(1).replace('.',','))}%"></div></div></div>` : ''}
+              ${pctNum !== null ? `<div class="card-progress"><div class="card-progress-header"><span class="card-progress-label">Execução</span><span class="card-progress-pct">${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(2).replace('.',','))}%</span></div><div class="card-progress-track"><div class="card-progress-fill" style="width:${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(2).replace('.',','))}%"></div></div></div>` : ''}
             </div>`;
 
           const noResults = grid.querySelector('.no-results');
@@ -2193,10 +2193,10 @@ O menor volume de execuções no período ocorreu em função de atividades oper
       el.innerHTML = `
         <div class="card-progress-header">
           <span class="card-progress-label">Execução</span>
-          <span class="card-progress-pct">${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(1).replace('.',','))}%</span>
+          <span class="card-progress-pct">${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(2).replace('.',','))}%</span>
         </div>
         <div class="card-progress-track">
-          <div class="card-progress-fill" style="width:${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(1).replace('.',','))}%"></div>
+          <div class="card-progress-fill" style="width:${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(2).replace('.',','))}%"></div>
         </div>`;
     }
   }
@@ -2328,7 +2328,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
         ${novoPrazo ? `<div class="novo-prazo">↳ Novo prazo: ${novoPrazo}</div>` : ''}
         ${desc ? `<div class="card-desc">${desc.replace(/\n/g, '<br>')}</div>` : ''}
         ${stepsRaw ? `<div class="steps">${stepsRaw.split('\n').filter(l=>l.trim()).map(l=>`<div class="step-item"><div class="step-dot"></div>${l.trim()}</div>`).join('')}</div>` : ''}
-        ${pctNum !== null ? `<div class="card-progress"><div class="card-progress-header"><span class="card-progress-label">Execução</span><span class="card-progress-pct">${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(1).replace('.',','))}%</span></div><div class="card-progress-track"><div class="card-progress-fill" style="width:${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(1).replace('.',','))}%"></div></div></div>` : ''}
+        ${pctNum !== null ? `<div class="card-progress"><div class="card-progress-header"><span class="card-progress-label">Execução</span><span class="card-progress-pct">${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(2).replace('.',','))}%</span></div><div class="card-progress-track"><div class="card-progress-fill" style="width:${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(2).replace('.',','))}%"></div></div></div>` : ''}
       </div>`;
 
     const noResults = grid.querySelector('.no-results');
@@ -3067,10 +3067,10 @@ O menor volume de execuções no período ocorreu em função de atividades oper
       progressEl.innerHTML = `
         <div class="card-progress-header">
           <span class="card-progress-label">Execução</span>
-          <span class="card-progress-pct">${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(1).replace('.',','))}%</span>
+          <span class="card-progress-pct">${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(2).replace('.',','))}%</span>
         </div>
         <div class="card-progress-track">
-          <div class="card-progress-fill" style="width:${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(1).replace('.',','))}%"></div>
+          <div class="card-progress-fill" style="width:${(pctNum % 1 === 0 ? pctNum : pctNum.toFixed(2).replace('.',','))}%"></div>
         </div>`;
     } else if (progressEl) {
       progressEl.remove();
