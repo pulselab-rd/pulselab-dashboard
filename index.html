@@ -2151,9 +2151,9 @@ O menor volume de execuções no período ocorreu em função de atividades oper
         el.textContent = `↳ Novo prazo: ${data.novoPrazo}`;
       } else if (el) el.remove();
     }
-    if (foiEditado && data.persons !== undefined) {
+    if (data.persons !== undefined && data.persons.length > 0) {
       const meta = card.querySelector('.card-meta');
-      if (meta) meta.innerHTML = data.persons.map(p => `<span class="person-tag">${p}</span>`).join('');
+      if (meta) meta.innerHTML = [...new Set(data.persons)].map(p => `<span class="person-tag">${p}</span>`).join('');
     }
     if (foiEditado && data.tipo) { card.dataset.type = data.tipo; }
 
@@ -2348,7 +2348,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
         _editado: true,
         num: proximoNum,
         name, status, tipo, prazo, novoPrazo, desc, pct,
-        persons,
+        persons: [...new Set(persons)],
         steps: stepsRaw ? stepsRaw.split('\n').filter(l => l.trim()) : []
       });
     }
@@ -3004,7 +3004,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
     // Responsáveis
     const metaEl = currentCard.querySelector('.card-meta');
     if (metaEl) {
-      metaEl.innerHTML = persons.map(p => `<span class="person-tag">${p}</span>`).join('');
+      metaEl.innerHTML = [...new Set(persons)].map(p => `<span class="person-tag">${p}</span>`).join('');
     }
 
     // Prazo
@@ -3084,7 +3084,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
       window._saveCardToFirebase(cardId, {
         _editado: true,
         name, status, tipo, prazo, novoPrazo, desc, pct,
-        persons,
+        persons: [...new Set(persons)],
         steps: stepsRaw ? stepsRaw.split('\n').filter(l => l.trim()) : []
       }).finally(() => {
         if (btnSaveEl) { btnSaveEl.textContent = 'Salvar'; btnSaveEl.disabled = false; }
