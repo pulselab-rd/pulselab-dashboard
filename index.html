@@ -2960,7 +2960,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
     const desc     = document.getElementById('editDesc').value.trim();
     const stepsRaw = document.getElementById('editSteps').value.trim();
     const pct = document.getElementById('editPct').value.trim();
-    const persons = Array.from(document.querySelectorAll('.person-toggle.selected')).map(t => t.dataset.name);
+    const persons = Array.from(document.querySelectorAll('#editPersons .person-toggle.selected')).map(t => t.dataset.name);
 
     const info = statusMap[status];
 
