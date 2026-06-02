@@ -2078,7 +2078,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
 
           const prazoClass = status === 'status-entregue' ? 'ok' : status === 'status-atrasado' ? 'late' : 'warn';
           const prazoLabel = status === 'status-entregue' ? 'Entregue em:' : 'Prazo:';
-          const pctNum     = data.pct !== undefined && data.pct !== '' ? Math.round(Math.min(100, Math.max(0, parseFloat((data.pct||'0').toString().replace(',','.')) || 0)) * 10) / 10 : null;
+          const pctNum     = data.pct !== undefined && data.pct !== '' ? Math.min(100, Math.max(0, parseFloat((data.pct||'0').toString().replace(',','.')) || 0)) : null;
           const persons    = data.persons || [];
           const steps      = data.steps   || [];
 
@@ -2187,7 +2187,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
       } else if (el) el.remove();
     }
     if (data.pct !== undefined && data.pct !== '') {
-      const pctNum = Math.round(Math.min(100, Math.max(0, parseFloat((data.pct||'0').toString().replace(',','.')) || 0)) * 10) / 10;
+      const pctNum = Math.min(100, Math.max(0, parseFloat((data.pct||'0').toString().replace(',','.')) || 0));
       let el = card.querySelector('.card-progress');
       if (!el) { el = document.createElement('div'); el.className = 'card-progress'; card.querySelector('.edit-btn')?.before(el); }
       el.innerHTML = `
@@ -2312,7 +2312,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
 
     const prazoClass = status === 'status-entregue' ? 'ok' : status === 'status-atrasado' ? 'late' : 'warn';
     const prazoLabel = status === 'status-entregue' ? 'Entregue em:' : 'Prazo:';
-    const pctNum     = pct !== '' ? Math.round(Math.min(100, Math.max(0, parseFloat((pct||'0').toString().replace(',','.')) || 0)) * 10) / 10 : null;
+    const pctNum     = pct !== '' ? Math.min(100, Math.max(0, parseFloat((pct||'0').toString().replace(',','.')) || 0)) : null;
 
     let cardHTML = `
       <div class="card ${status}" data-card-id="${cardId}" data-num="${proximoNum}" data-type="${tipo}" style="animation:fadeUp 0.3s ease both;">
@@ -3058,7 +3058,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
     // % de execução
     let progressEl = currentCard.querySelector('.card-progress');
     if (pct !== '') {
-      const pctNum = Math.round(Math.min(100, Math.max(0, parseFloat((pct||'0').toString().replace(',','.')) || 0)) * 10) / 10;
+      const pctNum = Math.min(100, Math.max(0, parseFloat((pct||'0').toString().replace(',','.')) || 0));
       if (!progressEl) {
         progressEl = document.createElement('div');
         progressEl.className = 'card-progress';
