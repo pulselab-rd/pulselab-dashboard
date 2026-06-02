@@ -2865,6 +2865,26 @@ O menor volume de execuções no período ocorreu em função de atividades oper
         if (e.key === 'Escape') { si.value = ''; runSearch(); si.blur(); }
       });
     }
+
+    // Corrigir responsáveis duplicados em todos os cards automaticamente
+    setTimeout(() => {
+      document.querySelectorAll('.card').forEach(card => {
+        const meta = card.querySelector('.card-meta');
+        if (!meta) return;
+        const tags = Array.from(meta.querySelectorAll('.person-tag'));
+        const nomes = tags.map(t => t.textContent.trim());
+        const unicos = [...new Set(nomes)];
+        if (unicos.length < nomes.length) {
+          // Tinha duplicatas — corrigir no DOM
+          meta.innerHTML = unicos.map(p => `<span class="person-tag">${p}</span>`).join('');
+          // Salvar no Firebase corrigido
+          const cardId = card.dataset.cardId;
+          if (cardId && window._saveCardToFirebase) {
+            window._saveCardToFirebase(cardId, { _editado: true, persons: unicos });
+          }
+        }
+      });
+    }, 2000); // espera 2s para o Firebase carregar primeiro
   });
 
   const modal = document.getElementById('editModal');
