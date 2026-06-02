@@ -1224,6 +1224,15 @@
       <div class="card-desc">Revisão de script, testes em farmácia e envio massivo.</div>
       <div class="steps"><div class="step-item"><div class="step-dot"></div>Teste V1 até 22/05</div></div>
     </div>
+    <div class="card status-andamento" data-card-id="card-40" data-num="40" data-type="administrativo">
+      <div class="card-status-bar"></div>
+      <div class="card-top">
+        <div class="card-name">Dashboard PulseLab</div>
+        <span class="status-badge badge-andamento">Em Andamento</span>
+      </div>
+      <div class="card-meta"><span class="person-tag">Danilo</span></div>
+      <div class="card-desc">✅ CSS aparecendo como texto no rodapé<br>✅ Fechar modal ao clicar fora (perdia a edição)<br>✅ Porcentagem com decimais exatos (2,27% = 2,27%)<br>✅ Quebras de linha na descrição preservadas ao salvar<br>✅ Dados do Move 2 Cloud atualizados para 01/06<br>✅ Rodapé removido</div>
+    </div>
   </div>
 
   <!-- ATRASADAS -->
@@ -2113,6 +2122,16 @@ O menor volume de execuções no período ocorreu em função de atividades oper
     } catch (e) {
       console.error("Erro ao carregar cards:", e);
     }
+    // Limpar responsáveis duplicados em todos os cards
+    document.querySelectorAll('.card').forEach(card => {
+      const meta = card.querySelector('.card-meta');
+      if (!meta) return;
+      const tags = Array.from(meta.querySelectorAll('.person-tag')).map(t => t.textContent.trim());
+      const uniq = [...new Set(tags)];
+      if (uniq.length !== tags.length) {
+        meta.innerHTML = uniq.map(p => `<span class="person-tag">${p}</span>`).join('');
+      }
+    });
     updateKPIs();
   }
 
