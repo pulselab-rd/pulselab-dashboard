@@ -302,6 +302,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 14px;
     margin-bottom: 32px;
+    align-items: start;
   }
 
   .card {
@@ -313,6 +314,7 @@
     overflow: visible;
     transition: border-color 0.2s, transform 0.2s;
     animation: fadeUp 0.4s ease both;
+    align-self: start;
   }
 
   .card:hover {
@@ -898,6 +900,177 @@
     .prog-row { grid-template-columns: 80px 1fr 50px; }
     .prog-pct { display: none; }
   }
+
+/* EMOJI SIMPLES */
+  .emoji-field-wrap {
+    position: relative;
+    margin-bottom: 5px;
+  }
+
+  .emoji-trigger-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--muted2);
+    font-size: 11px;
+    padding: 3px 10px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    transition: all 0.15s;
+  }
+
+  .emoji-trigger-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .emoji-dropdown {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    z-index: 9999;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    max-width: 300px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    transition: opacity 0.15s;
+  }
+
+  .emoji-dropdown.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .emoji-drop-item {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: background 0.1s;
+    line-height: 1;
+  }
+
+  .emoji-drop-item:hover { background: var(--surface2); }
+  .editor-wrap {
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    overflow: hidden;
+    background: var(--surface2);
+  }
+
+  .editor-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 5px 8px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .tb-sep {
+    width: 1px;
+    height: 16px;
+    background: var(--border);
+    margin: 0 4px;
+    flex-shrink: 0;
+  }
+
+  .tb-btn {
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #94a3b8;
+    font-size: 13px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    transition: all 0.15s;
+    padding: 0;
+    flex-shrink: 0;
+    font-weight: bold;
+  }
+
+  .tb-btn:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.1); }
+  .tb-btn.active { background: rgba(0,212,255,0.15); color: var(--accent); border-color: rgba(0,212,255,0.3); }
+  .tb-btn b { font-size: 15px; font-weight: 900; font-style: normal; }
+  .tb-btn i { font-size: 14px; font-style: italic; font-weight: normal; }
+  .tb-btn u { font-size: 13px; text-decoration: underline; font-weight: normal; }
+  .tb-btn s { font-size: 13px; text-decoration: line-through; font-weight: normal; }
+  .tb-btn.tb-emoji { font-size: 17px; }
+  .tb-btn.tb-clear { font-size: 12px; font-weight: bold; color: #64748b; }
+
+  .editor-toolbar .tb-sep {
+    width: 1px;
+    height: 18px;
+    background: #1e2330;
+    margin: 0 4px;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+
+  .editor-area {
+    min-height: 80px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px 12px;
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.6;
+    outline: none;
+    background: var(--surface2);
+  }
+
+  .editor-area:empty::before {
+    content: attr(data-placeholder);
+    color: var(--muted);
+    pointer-events: none;
+  }
+
+  .editor-area ul, .editor-area ol {
+    padding-left: 20px;
+    margin: 4px 0;
+  }
+
+  .emoji-picker {
+    display: none !important;
+    flex-wrap: wrap;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    max-width: 280px;
+    position: absolute;
+    z-index: 999;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  .emoji-picker.open { display: flex !important; }
+
+  .emoji-item {
+    font-size: 18px;
+    cursor: pointer;
+    padding: 3px 5px;
+    border-radius: 4px;
+    transition: background 0.1s;
+    line-height: 1;
+  }
+
+  .emoji-item:hover { background: var(--surface2); }
+
+
 </style>
 </head>
 <body>
@@ -964,9 +1137,9 @@
     <div class="m2c-header">
       <div class="m2c-title">Move 2 Cloud · <span>Substituição DLL Vida Link</span> — Progresso de Execução</div>
       <div class="m2c-stats">
-        <div class="m2c-stat">Hoje: <strong>768 máq.</strong></div>
-        <div class="m2c-stat">Ontem: <strong>2.782 máq.</strong></div>
-        <div class="m2c-stat">Pendentes: <strong>7.640</strong></div>
+        <div class="m2c-stat">Hoje: <strong>1.392 máq.</strong></div>
+        <div class="m2c-stat">Ontem: <strong>1.104 máq.</strong></div>
+        <div class="m2c-stat">Pendentes: <strong>3.706</strong></div>
         <div class="m2c-stat">Prazo: <strong>30/06</strong></div>
       </div>
     </div>
@@ -974,26 +1147,26 @@
       <div class="prog-row">
         <div class="prog-label">Total Geral</div>
         <div class="prog-bar-track">
-          <div class="prog-bar-fill fill-total" style="width:42.9%"></div>
+          <div class="prog-bar-fill fill-total" style="width:72.3%"></div>
         </div>
-        <div class="prog-done">5.725</div>
-        <div class="prog-pct">42,9%</div>
+        <div class="prog-done">9.655</div>
+        <div class="prog-pct">72,3%</div>
       </div>
       <div class="prog-row">
         <div class="prog-label">Ubuntu 18</div>
         <div class="prog-bar-track">
-          <div class="prog-bar-fill fill-ubuntu" style="width:49.6%"></div>
+          <div class="prog-bar-fill fill-ubuntu" style="width:71.7%"></div>
         </div>
-        <div class="prog-done">5.089</div>
-        <div class="prog-pct">49,6%</div>
+        <div class="prog-done">7.354</div>
+        <div class="prog-pct">71,7%</div>
       </div>
       <div class="prog-row">
         <div class="prog-label">Windows</div>
         <div class="prog-bar-track">
-          <div class="prog-bar-fill fill-windows" style="width:20.6%"></div>
+          <div class="prog-bar-fill fill-windows" style="width:74.4%"></div>
         </div>
-        <div class="prog-done">636</div>
-        <div class="prog-pct">20,6%</div>
+        <div class="prog-done">2.301</div>
+        <div class="prog-pct">74,4%</div>
       </div>
     </div>
   </div>
@@ -1012,8 +1185,9 @@
       </div>
       <div class="card-meta"><span class="person-tag">Larissa</span><span class="person-tag">Philip</span></div>
       <div class="card-prazo">Prazo: <span class="prazo-date warn">&nbsp;30/06</span></div>
-      <div class="card-desc">Execução do período: 1.128 máquinas. Total: 13.359. Concluídas: 2.175 (16,3%). Ubuntu 18: 2.148/10.251.</div>
+      <div class="card-desc">🎯 Objetivo<br>Realizar a atualização do parâmetro PRECO_NOME_DLL no arquivo independ.ini do Autorizador Independente Kyz em máquinas Linux e Windows das farmácias Drogasil e Raia, adequando o ambiente para a migração On-premise → Cloud.<br><br>📌 Alteração aplicada<br>ANTES: PRECO_NOME_DLL=&lt;valor antigo&gt;<br>DEPOIS: PRECO_NOME_DLL=C:\windows\LePrecoRD.dll<br><br>🖥️ Escopo da execução<br>• Linux — acesso via SSH<br>• Windows — acesso via SMB (smbclient + impacket-wmiexec)<br><br>📊 Resultados da execução<br>📌 Execução do período: 1.392 máquinas<br>📌 Execuções realizadas no dia anterior: 1.104 máquinas<br>📌 Total de máquinas no escopo: 13.355<br>📌 Máquinas concluídas: 9.655 (72,3%)<br>📌 Máquinas pendentes: 3.706<br><br>📌 Ubuntu 18<br>• Total: 10.250<br>• Concluídas: 7.354<br>• Pendentes: 2.902<br><br>📌 Windows<br>• Total: 3.091<br>• Concluídas: 2.301<br>• Pendentes: 790<br><br>📊 Distribuição operacional<br>• Execuções concentradas majoritariamente em ambiente Ubuntu 18<br>• Continuidade das execuções e validações operacionais nos ambientes Linux e Windows<br>• Avanço contínuo das execuções em máquinas Windows utilizando SMB e impacket-wmiexec<br>• Projeto alcançou 72,3% de conclusão geral do escopo<br><br>✅ Entregas concluídas<br>• Continuidade das atividades planejadas do projeto, mantendo estabilidade operacional e conformidade nas validações aplicadas durante as execuções.<br><br>📈 Status da operação<br>Projeto segue avançando de forma estável, mantendo evolução contínua nas execuções e validações aplicadas nos ambientes Linux e Windows.<br><br>⚠️ Observações<br>• Sem pontos de atenção identificados no período.</div>
       <div class="steps"><div class="step-item"><div class="step-dot"></div>Concluir Execução</div><div class="step-item"><div class="step-dot"></div>Enviar TEP</div></div>
+      <div class="card-progress"><div class="card-progress-header"><span class="card-progress-label">Execução</span><span class="card-progress-pct">72,3%</span></div><div class="card-progress-track"><div class="card-progress-fill" style="width:72.3%"></div></div></div>
     </div>
     <div class="card status-andamento" data-card-id="card-21" data-num="11" data-type="projetos">
       <div class="card-status-bar"></div>
@@ -1822,176 +1996,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
     </div>
   </div>
 </div>
-  /* EMOJI SIMPLES */
-  .emoji-field-wrap {
-    position: relative;
-    margin-bottom: 5px;
-  }
-
-  .emoji-trigger-btn {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    color: var(--muted2);
-    font-size: 11px;
-    padding: 3px 10px;
-    cursor: pointer;
-    font-family: Arial, sans-serif;
-    transition: all 0.15s;
-  }
-
-  .emoji-trigger-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-  .emoji-dropdown {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    top: 30px;
-    left: 0;
-    z-index: 9999;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    max-width: 300px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    transition: opacity 0.15s;
-  }
-
-  .emoji-dropdown.open {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .emoji-drop-item {
-    font-size: 20px;
-    cursor: pointer;
-    padding: 2px 4px;
-    border-radius: 4px;
-    transition: background 0.1s;
-    line-height: 1;
-  }
-
-  .emoji-drop-item:hover { background: var(--surface2); }
-  .editor-wrap {
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    overflow: hidden;
-    background: var(--surface2);
-  }
-
-  .editor-toolbar {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    padding: 5px 8px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    flex-wrap: wrap;
-  }
-
-  .tb-sep {
-    width: 1px;
-    height: 16px;
-    background: var(--border);
-    margin: 0 4px;
-    flex-shrink: 0;
-  }
-
-  .tb-btn {
-    background: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    color: #94a3b8;
-    font-size: 13px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-family: Arial, sans-serif;
-    transition: all 0.15s;
-    padding: 0;
-    flex-shrink: 0;
-    font-weight: bold;
-  }
-
-  .tb-btn:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.1); }
-  .tb-btn.active { background: rgba(0,212,255,0.15); color: var(--accent); border-color: rgba(0,212,255,0.3); }
-  .tb-btn b { font-size: 15px; font-weight: 900; font-style: normal; }
-  .tb-btn i { font-size: 14px; font-style: italic; font-weight: normal; }
-  .tb-btn u { font-size: 13px; text-decoration: underline; font-weight: normal; }
-  .tb-btn s { font-size: 13px; text-decoration: line-through; font-weight: normal; }
-  .tb-btn.tb-emoji { font-size: 17px; }
-  .tb-btn.tb-clear { font-size: 12px; font-weight: bold; color: #64748b; }
-
-  .editor-toolbar .tb-sep {
-    width: 1px;
-    height: 18px;
-    background: #1e2330;
-    margin: 0 4px;
-    flex-shrink: 0;
-    display: inline-block;
-  }
-
-  .editor-area {
-    min-height: 80px;
-    max-height: 200px;
-    overflow-y: auto;
-    padding: 10px 12px;
-    color: var(--text);
-    font-family: Arial, sans-serif;
-    font-size: 12px;
-    line-height: 1.6;
-    outline: none;
-    background: var(--surface2);
-  }
-
-  .editor-area:empty::before {
-    content: attr(data-placeholder);
-    color: var(--muted);
-    pointer-events: none;
-  }
-
-  .editor-area ul, .editor-area ol {
-    padding-left: 20px;
-    margin: 4px 0;
-  }
-
-  .emoji-picker {
-    display: none !important;
-    flex-wrap: wrap;
-    gap: 4px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px;
-    max-width: 280px;
-    position: absolute;
-    z-index: 999;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-  }
-
-  .emoji-picker.open { display: flex !important; }
-
-  .emoji-item {
-    font-size: 18px;
-    cursor: pointer;
-    padding: 3px 5px;
-    border-radius: 4px;
-    transition: background 0.1s;
-    line-height: 1;
-  }
-
-  .emoji-item:hover { background: var(--surface2); }
-
-<script type="module">
+  <script type="module">
 
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, doc, getDoc, setDoc, deleteDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -2040,15 +2045,15 @@ O menor volume de execuções no período ocorreu em função de atividades oper
         'status-sem-previsao': { badge: 'badge-sem-previsao', label: 'Sem Previsão' },
       };
 
-      // IDs válidos: card-01 a card-39
+      // IDs válidos: card-01 a card-39 + qualquer card-new-*
       const validIds = new Set(Array.from({length: 39}, (_, i) => `card-${String(i+1).padStart(2,'0')}`));
 
       snapshot.forEach(docSnap => {
         const cardId = docSnap.id;
         const data   = docSnap.data();
 
-        // Ignorar cards com IDs fora do conjunto válido (ex: card-new-* antigos)
-        if (!existingIds.has(cardId) && !validIds.has(cardId)) {
+        // Ignorar apenas IDs que não são card-XX nem card-new-*
+        if (!existingIds.has(cardId) && !validIds.has(cardId) && !cardId.startsWith('card-new-')) {
           console.log(`Ignorando card órfão do Firebase: ${cardId}`);
           return;
         }
@@ -2068,7 +2073,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
 
           const prazoClass = status === 'status-entregue' ? 'ok' : status === 'status-atrasado' ? 'late' : 'warn';
           const prazoLabel = status === 'status-entregue' ? 'Entregue em:' : 'Prazo:';
-          const pctNum     = data.pct !== undefined && data.pct !== '' ? Math.min(100, Math.max(0, parseInt(data.pct) || 0)) : null;
+          const pctNum     = data.pct !== undefined && data.pct !== '' ? Math.min(100, Math.max(0, parseFloat(String(data.pct).replace(",", ".")) || 0)) : null;
           const persons    = data.persons || [];
           const steps      = data.steps   || [];
 
@@ -2082,9 +2087,9 @@ O menor volume de execuções no período ocorreu em função de atividades oper
               <div class="card-meta">${persons.map(p => `<span class="person-tag">${p}</span>`).join('')}</div>
               ${data.prazo ? `<div class="card-prazo">${prazoLabel} <span class="prazo-date ${prazoClass}">&nbsp;${data.prazo}</span></div>` : ''}
               ${data.novoPrazo ? `<div class="novo-prazo">↳ Novo prazo: ${data.novoPrazo}</div>` : ''}
-              ${data.desc ? `<div class="card-desc">${data.desc}</div>` : ''}
+              ${data.desc ? `<div class="card-desc"></div>` : ''}
               ${steps.length ? `<div class="steps">${steps.map(s => `<div class="step-item"><div class="step-dot"></div>${s}</div>`).join('')}</div>` : ''}
-              ${pctNum !== null ? `<div class="card-progress"><div class="card-progress-header"><span class="card-progress-label">Execução</span><span class="card-progress-pct">${pctNum}%</span></div><div class="card-progress-track"><div class="card-progress-fill" style="width:${pctNum}%"></div></div></div>` : ''}
+              ${pctNum !== null ? `<div class="card-progress"><div class="card-progress-header"><span class="card-progress-label">Execução</span><span class="card-progress-pct">${data.pct}%</span></div><div class="card-progress-track"><div class="card-progress-fill" style="width:${pctNum}%"></div></div></div>` : ''}
             </div>`;
 
           const noResults = grid.querySelector('.no-results');
@@ -2167,7 +2172,11 @@ O menor volume de execuções no período ocorreu em função de atividades oper
       let el = card.querySelector('.card-desc');
       if (data.desc) {
         if (!el) { el = document.createElement('div'); el.className = 'card-desc'; card.querySelector('.edit-btn')?.before(el); }
-        el.textContent = data.desc;
+        el.innerHTML = data.desc.split('\n').map(l => {
+          const span = document.createElement('span');
+          span.textContent = l;
+          return span.innerHTML;
+        }).join('<br>');
       } else if (el) el.remove();
     }
     if (data.steps !== undefined) {
@@ -2178,13 +2187,13 @@ O menor volume de execuções no período ocorreu em função de atividades oper
       } else if (el) el.remove();
     }
     if (data.pct !== undefined && data.pct !== '') {
-      const pctNum = Math.min(100, Math.max(0, parseInt(data.pct) || 0));
+      const pctNum = Math.min(100, Math.max(0, parseFloat(String(data.pct).replace(",", ".")) || 0));
       let el = card.querySelector('.card-progress');
       if (!el) { el = document.createElement('div'); el.className = 'card-progress'; card.querySelector('.edit-btn')?.before(el); }
       el.innerHTML = `
         <div class="card-progress-header">
           <span class="card-progress-label">Execução</span>
-          <span class="card-progress-pct">${pctNum}%</span>
+          <span class="card-progress-pct">${data.pct}%</span>
         </div>
         <div class="card-progress-track">
           <div class="card-progress-fill" style="width:${pctNum}%"></div>
@@ -2303,7 +2312,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
 
     const prazoClass = status === 'status-entregue' ? 'ok' : status === 'status-atrasado' ? 'late' : 'warn';
     const prazoLabel = status === 'status-entregue' ? 'Entregue em:' : 'Prazo:';
-    const pctNum     = pct !== '' ? Math.min(100, Math.max(0, parseInt(pct) || 0)) : null;
+    const pctNum     = pct !== '' ? Math.min(100, Math.max(0, parseFloat(String(pct).replace(",", ".")) || 0)) : null;
 
     let cardHTML = `
       <div class="card ${status}" data-card-id="${cardId}" data-num="${proximoNum}" data-type="${tipo}" style="animation:fadeUp 0.3s ease both;">
@@ -2319,7 +2328,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
         ${novoPrazo ? `<div class="novo-prazo">↳ Novo prazo: ${novoPrazo}</div>` : ''}
         ${desc ? `<div class="card-desc">${desc}</div>` : ''}
         ${stepsRaw ? `<div class="steps">${stepsRaw.split('\n').filter(l=>l.trim()).map(l=>`<div class="step-item"><div class="step-dot"></div>${l.trim()}</div>`).join('')}</div>` : ''}
-        ${pctNum !== null ? `<div class="card-progress"><div class="card-progress-header"><span class="card-progress-label">Execução</span><span class="card-progress-pct">${pctNum}%</span></div><div class="card-progress-track"><div class="card-progress-fill" style="width:${pctNum}%"></div></div></div>` : ''}
+        ${pctNum !== null ? `<div class="card-progress"><div class="card-progress-header"><span class="card-progress-label">Execução</span><span class="card-progress-pct">${pct}%</span></div><div class="card-progress-track"><div class="card-progress-fill" style="width:${pctNum}%"></div></div></div>` : ''}
       </div>`;
 
     const noResults = grid.querySelector('.no-results');
@@ -2815,23 +2824,28 @@ O menor volume de execuções no período ocorreu em função de atividades oper
   document.getElementById('btnConfirmDelete').addEventListener('click', async () => {
     if (!cardToDelete) return;
     const cardId = cardToDelete.dataset.cardId;
+    const cardRef = cardToDelete;
 
-    // Remover do Firebase
-    if (cardId && window._deleteCardFromFirebase) {
-      await window._deleteCardFromFirebase(cardId);
-    }
-
-    // Remover do DOM com animação
-    cardToDelete.style.transition = 'opacity 0.25s, transform 0.25s';
-    cardToDelete.style.opacity = '0';
-    cardToDelete.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-      cardToDelete.remove();
-      updateKPIs();
-    }, 250);
-
+    // Fechar overlay imediatamente
     confirmOverlay.classList.remove('active');
     cardToDelete = null;
+
+    // Remover do DOM com animação imediata
+    cardRef.style.transition = 'opacity 0.25s, transform 0.25s';
+    cardRef.style.opacity = '0';
+    cardRef.style.transform = 'scale(0.95)';
+    cardRef.style.pointerEvents = 'none';
+
+    setTimeout(() => {
+      cardRef.remove();
+      updateKPIs();
+      aplicarFiltroAtivo();
+    }, 250);
+
+    // Remover do Firebase em paralelo
+    if (cardId && window._deleteCardFromFirebase) {
+      window._deleteCardFromFirebase(cardId);
+    }
   });
 
   function addDeleteBtn(card) {
@@ -2856,6 +2870,31 @@ O menor volume de execuções no período ocorreu em função de atividades oper
 
   window.addEventListener('load', () => {
     if (window._loadAllCards) window._loadAllCards();
+
+    // Garantir que card-18 tenha os dados corretos no Firebase
+    setTimeout(() => {
+      if (window._saveCardToFirebase) {
+        const card18 = document.querySelector('[data-card-id="card-18"]');
+        if (card18) {
+          const descEl = card18.querySelector('.card-desc');
+          // Só salva se não tiver _editado no Firebase (documento foi deletado)
+          // Usa innerHTML para preservar <br>
+          const desc = descEl ? descEl.innerHTML : '';
+          window._saveCardToFirebase('card-18', {
+            _editado: true,
+            name: 'Move 2 Cloud (Substituição DLL Vida Link)',
+            status: 'status-andamento',
+            tipo: 'projetos',
+            prazo: '30/06',
+            novoPrazo: '',
+            pct: '72,3',
+            persons: ['Larissa', 'Philip'],
+            desc: '🎯 Objetivo\nRealizar a atualização do parâmetro PRECO_NOME_DLL no arquivo independ.ini do Autorizador Independente Kyz em máquinas Linux e Windows das farmácias Drogasil e Raia, adequando o ambiente para a migração On-premise → Cloud.\n\n📌 Alteração aplicada\nANTES: PRECO_NOME_DLL=<valor antigo>\nDEPOIS: PRECO_NOME_DLL=C:\\windows\\LePrecoRD.dll\n\n🖥️ Escopo da execução\n• Linux — acesso via SSH\n• Windows — acesso via SMB (smbclient + impacket-wmiexec)\n\n📊 Resultados da execução\n📌 Execução do período: 1.392 máquinas\n📌 Execuções realizadas no dia anterior: 1.104 máquinas\n📌 Total de máquinas no escopo: 13.355\n📌 Máquinas concluídas: 9.655 (72,3%)\n📌 Máquinas pendentes: 3.706\n\n📌 Ubuntu 18\n• Total: 10.250\n• Concluídas: 7.354\n• Pendentes: 2.902\n\n📌 Windows\n• Total: 3.091\n• Concluídas: 2.301\n• Pendentes: 790\n\n📊 Distribuição operacional\n• Execuções concentradas majoritariamente em ambiente Ubuntu 18\n• Continuidade das execuções e validações operacionais nos ambientes Linux e Windows\n• Avanço contínuo das execuções em máquinas Windows utilizando SMB e impacket-wmiexec\n• Projeto alcançou 72,3% de conclusão geral do escopo\n\n✅ Entregas concluídas\n• Continuidade das atividades planejadas do projeto, mantendo estabilidade operacional e conformidade nas validações aplicadas durante as execuções.\n\n📈 Status da operação\nProjeto segue avançando de forma estável, mantendo evolução contínua nas execuções e validações aplicadas nos ambientes Linux e Windows.\n\n⚠️ Observações\n• Sem pontos de atenção identificados no período.',
+            steps: ['Concluir Execução', 'Enviar TEP']
+          });
+        }
+      }
+    }, 3000);
 
     // Inicializar busca após DOM completo
     const si = document.getElementById('searchInput');
@@ -2950,12 +2989,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
     currentCard = null;
   });
 
-  modal.addEventListener('click', e => {
-    if (e.target === modal) {
-      modal.classList.remove('active');
-      currentCard = null;
-    }
-  });
+  // Modal NÃO fecha ao clicar fora - só pelo botão Cancelar
 
   // Toggles de pessoa
   document.querySelectorAll('#editPersons .person-toggle').forEach(tog => {
@@ -3052,7 +3086,12 @@ O menor volume de execuções no período ocorreu em função de atividades oper
         descEl.className = 'card-desc';
         currentCard.querySelector('.edit-btn').before(descEl);
       }
-      descEl.innerHTML = desc;
+      // Respeitar quebras de linha convertendo \n em <br>
+      descEl.innerHTML = desc.split('\n').map(l => {
+        const span = document.createElement('span');
+        span.textContent = l;
+        return span.innerHTML;
+      }).join('<br>');
     } else if (descEl) {
       descEl.remove();
     }
@@ -3074,7 +3113,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
     // % de execução
     let progressEl = currentCard.querySelector('.card-progress');
     if (pct !== '') {
-      const pctNum = Math.min(100, Math.max(0, parseInt(pct) || 0));
+      const pctNum = Math.min(100, Math.max(0, parseFloat(String(pct).replace(",", ".")) || 0));
       if (!progressEl) {
         progressEl = document.createElement('div');
         progressEl.className = 'card-progress';
@@ -3083,7 +3122,7 @@ O menor volume de execuções no período ocorreu em função de atividades oper
       progressEl.innerHTML = `
         <div class="card-progress-header">
           <span class="card-progress-label">Execução</span>
-          <span class="card-progress-pct">${pctNum}%</span>
+          <span class="card-progress-pct">${pct}%</span>
         </div>
         <div class="card-progress-track">
           <div class="card-progress-fill" style="width:${pctNum}%"></div>
