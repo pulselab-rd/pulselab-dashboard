@@ -2973,7 +2973,14 @@ O menor volume de execuções no período ocorreu em função de atividades oper
     // Carregar conteúdo nos campos
     initEmojiPickers();
     const descEl = card.querySelector('.card-desc');
-    document.getElementById('editDesc').value = descEl ? descEl.textContent.trim() : '';
+    if (descEl) {
+      // Converter <br> de volta para \n para exibir corretamente no textarea
+      const clone = descEl.cloneNode(true);
+      clone.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
+      document.getElementById('editDesc').value = clone.textContent.trim();
+    } else {
+      document.getElementById('editDesc').value = '';
+    }
 
     const steps = Array.from(card.querySelectorAll('.step-item')).map(s => {
       const dot = s.querySelector('.step-dot');
